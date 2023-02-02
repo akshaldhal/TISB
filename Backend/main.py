@@ -80,7 +80,7 @@ async def update(update: Update, username: str = Depends(get_current_user)):
     # update the materials in possession with the farmer
     if username not in materials:
         materials[username] = []
-        materials[username].append(update.item)
+    materials[username].append(update.item)
     return {"message": "Materials updated successfully"}
 
 @app.get("/suggestions")
