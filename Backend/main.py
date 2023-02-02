@@ -4,6 +4,8 @@ import requests
 import jwt
 import bcrypt
 
+#uvicorn main:app --reload
+
 app = FastAPI()
 
 # define the user model
