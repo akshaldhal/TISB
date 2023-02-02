@@ -85,27 +85,27 @@ async def update(update: Update, username: str = Depends(get_current_user)):
 
 @app.get("/suggestions")
 async def suggestions(username: str = Depends(get_current_user)):
-# get the current weather
-weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=city_name&appid=your_api_key")
-weather = weather_data.json()["weather"][0]["main"]
-# get the best practices for the current weather
-best_practices = None
-if weather == "Clear":
-best_practices = "Plant crops that require a lot of sunlight."
-elif weather == "Rain":
-best_practices = "Plant crops that are resistant to dampness."
-elif weather == "Snow":
-best_practices = "Protect your crops from the cold and snow."
-# get the crops grown in the region
-crop_data = requests.get("https://api.example.com/crops?location=" + materials[username]["location"])
-crops = crop_data.json()
-# suggest the best crop to grow based on cost and competition
-best_crop = None
-best_cost = float("inf")
-for crop in crops:
-cost = crop["cost"]
-competition = crop["competition"]
-if cost < best_cost and competition < 0.5:
-best_crop = crop["name"]
-best_cost = cost
-return {"best_practices": best_practices, "best_crop": best_crop}
+    # get the current weather
+    weather_data = requests.get("https://api.openweathermap.org/data/2.5/weather?q=city_name&appid=your_api_key")
+    weather = weather_data.json()["weather"][0]["main"]
+    # get the best practices for the current weather
+    best_practices = None
+    if weather == "Clear":
+        best_practices = "Plant crops that require a lot of sunlight."
+    elif weather == "Rain":
+        best_practices = "Plant crops that are resistant to dampness."
+    elif weather == "Snow":
+        best_practices = "Protect your crops from the cold and snow."
+    # get the crops grown in the region
+    crop_data = requests.get("https://api.example.com/crops?location=" + materials[username]["location"])
+    crops = crop_data.json()
+    # suggest the best crop to grow based on cost and competition
+    best_crop = None
+    best_cost = float("inf")
+    for crop in crops:
+        cost = crop["cost"]
+        competition = crop["competition"]
+        if cost < best_cost and competition < 0.5:
+            best_crop = crop["name"]
+            best_cost = cost
+    return {"best_practices": best_practices, "best_crop": best_crop}
